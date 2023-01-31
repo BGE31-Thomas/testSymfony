@@ -55,6 +55,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type:'boolean')]
     private $is_verified = false;
 
+    #[ORM\Column(type:'string',length:100)]
+    private $resetToken;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -77,6 +80,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -187,6 +191,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(string $resetToken): self
+    {
+        $this->resetToken= $resetToken;
 
         return $this;
     }
