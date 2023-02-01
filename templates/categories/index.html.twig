@@ -13,7 +13,7 @@
                             <div class="card-body">
                                 <h2 class="card-title">{{product.name}}</h2>
                                 <div class="card-text">{{product.description}}</div>
-                                <a href="" class="btn btn-primary">Voir les détails</a>
+                                <a href="{{path('app_products_details',{"slug":product.slug})}}" class="btn btn-primary">Voir les détails</a>
                             </div>
                         </div>
                     </div>

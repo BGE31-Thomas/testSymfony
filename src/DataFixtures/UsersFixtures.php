@@ -24,6 +24,7 @@ class UsersFixtures extends Fixture
         $admin->setCity("Toulouse");
         $admin->setPassword($this->passwordEncoder->hashPassword($admin,"totoro"));
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setResetToken(0);
 
         $manager->persist($admin);
 
@@ -37,7 +38,7 @@ class UsersFixtures extends Fixture
             $user->setZipcode(str_replace(" ","",$faker->postcode));
             $user->setCity($faker->city);
             $user->setPassword($this->passwordEncoder->hashPassword($user,"qsqsqs"));
-
+            $user->setResetToken(0);
             $manager->persist($user);
 
         }
