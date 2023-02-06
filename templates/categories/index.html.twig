@@ -9,7 +9,12 @@
                 <h1>Liste des produits de la catégorie {{category.name}}</h1>
                 {% for product in products.data %}
                     <div class="col-3">
+
                         <div class="card">
+                        
+                            <img src="{{asset('assets/uploads/products/mini/300x300-' ~ product.images[0].name)}}" class="card-img-top" alt="{{product.name}}"/>
+                       
+                            
                             <div class="card-body">
                                 <h2 class="card-title">{{product.name}}</h2>
                                 <div class="card-text">{{product.description}}</div>
