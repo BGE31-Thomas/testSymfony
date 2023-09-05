@@ -44,23 +44,37 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path:'/forgetPass',name:'app_forgotten_password')]
-    public function forgottenPassword(Request $request,UsersRepository $usersRepository,TokenGeneratorInterface $tgi, EntityManagerInterface $em,SendMailService $sms):Response
+    public function forgottenPassword(
+        Request $request,
+        UsersRepository $usersRepository,
+        TokenGeneratorInterface $tgi,
+        EntityManagerInterface $em,
+        SendMailService $sms):Response
     {
+        //Création du formulaire
         $form = $this->createForm(ResetPassRequestFormType::class);
 
         $form->handleRequest($request);
 
+        //Vérification que le formulaire a été soumis et est bien valide.
         if($form->isSubmitted() AND $form->isValid()){
+            //Recherche de l'utilisateur en fonction de l'email renseigné
             $user = $usersRepository->findOneByEmail($form->get('email')->getData());
             if ($user){
+                //On génère un token
                 $token = $tgi->generateToken();
+                //Le token est associé à l'utilisateur
                 $user->setResetToken($token);
+                //Enregistrement du token
                 $em->persist($user);
                 $em->flush();
 
+                //Création de l'url avec la route pour réinitialiser le mdp et le token
                 $url = $this->generateUrl('app_reset_pass',['token'=>$token],UrlGeneratorInterface::ABSOLUTE_URL);
 
+                //ENvoi des variables utiles : $url,$user
                 $context= compact('url','user');
+                //Envoi du mail à l'utilisateur
                 $sms->send(
                     'no-reply@monsite.fr',
                     $user->getEmail(),
@@ -82,21 +96,31 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/forgetPass/{token}',name:'app_reset_pass')]
-    public function resetPass(string $token,Request $request,UsersRepository $usersRepository,EntityManagerInterface $emi,UserPasswordHasherInterface $hash):Response
+    public function resetPass(
+        string $token,
+        Request $request,
+        UsersRepository $usersRepository,
+        EntityManagerInterface $emi,
+        UserPasswordHasherInterface $hash):Response
     {
+        //On retrouve l'utilisateur avec le token
         $user = $usersRepository->findOneByResetToken($token);
         if ($user){
+            //Création du formulaire
             $form = $this->createForm(ResetPassFormType::class);
 
             $form->handleRequest($request);
             if($form->isSubmitted() AND $form->isValid()){
+                //Réinitialisation du token
                 $user->setResetToken('');
+                //On crypte et associe le mdp saisi à l'utilisateur
                 $user->setPassword(
                     $hash->hashPassword(
                         $user,
                         $form->get('password')->getData()
                     )
                 );
+                //Enregistrement des données dans la base
                 $emi->persist($user);
                 $emi->flush();
 

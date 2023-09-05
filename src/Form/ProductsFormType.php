@@ -54,7 +54,7 @@ class ProductsFormType extends AbstractType
                     new All(
                         new Image([
                             'maxWidth' => 1200,
-                            'maxWidthMessage' =>"L'image doit faire 1{{max_width}} pixels de large au maximum."
+                            'maxWidthMessage' =>"L'image doit faire {{max_width}} pixels de large au maximum."
                         ])
                     )
                 ]              

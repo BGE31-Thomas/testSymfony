@@ -26,7 +26,12 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/add', name: 'add')]
-    public function add(Request $request,EntityManagerInterface $em,SluggerInterface $slugger,PicturesService $picturesService): Response
+    public function add(
+            Request $request,
+            EntityManagerInterface $em,
+            SluggerInterface $slugger,
+            PicturesService $picturesService
+        ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -67,7 +72,12 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'edit')]
-    public function edit(Products $product,Request $request,EntityManagerInterface $em,SluggerInterface $slugger,PicturesService $picturesService): Response
+    public function edit(
+        Products $product,
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $slugger,
+        PicturesService $picturesService): Response
     {
         $this->denyAccessUnlessGranted('PRODUCT_EDIT',$product);
 
@@ -120,7 +130,11 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/delete/image/{id}', name: 'delete_image')]
-    public function deleteImage(Images $image,Request $request,EntityManagerInterface $em,PicturesService $picturesService): JsonResponse
+    public function deleteImage(
+        Images $image,
+        Request $request,
+        EntityManagerInterface $em,
+        PicturesService $picturesService): JsonResponse
     {
         $data = json_decode($request->getContent(),true);
         if($this->isCsrfTokenValid('delete'.$image->getId(),$data['_token'])){

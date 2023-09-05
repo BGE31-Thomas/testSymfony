@@ -4,6 +4,7 @@ namespace App\Entity\Trait;
 
 use Doctrine\ORM\Mapping as ORM;
 
+//Permet de factoriser le champ created_at des différentes classes
 trait CreatedAtTrait{
     #[ORM\Column(options:['default'=>'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;

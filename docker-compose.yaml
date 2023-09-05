@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  database:
+    container_name: database
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: symfonyTest
+      MYSQL_USER: utilisateur
+      MYSQL_PASSWORD: mot2Passe
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+     
+  app:
+    image: 3b0dc841ac47
+    ports:
+      - '8080:80'
+    depends_on:
+      - database
+  php: 
+    image: 3b0dc841ac47
+  
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      - PMA_HOST=database
+      - PMA_USER=utilisateur
+      - PMA_PASSWORD=mot2Passe
+    volumes: 
+      - /sessions
+      - ~/docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+      
+  ui_web:
+    image: mailhog/mailhog
+    container_name: cont_mailhog
+    tty: true
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+    restart: on-failure
+    environment:
+      - MAIL_MAILER=smtp
+      - MAIL_HOST=127.0.0.1
+      - MAIL_PORT=1025
+      - MAIL_USERNAME=null
+      - MAIL_PASSWORD=null
+      - MAIL_ENCRYPTION=null
