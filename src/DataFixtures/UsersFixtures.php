@@ -16,13 +16,13 @@ class UsersFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $admin = new Users();
-        $admin->setEmail("tpjarles@gmail.com");
+        $admin->setEmail("toto@email.com");
         $admin->setLastName('Thom');
         $admin->setFirstName("Thom");
         $admin->setAddress("1 rue de la rue");
-        $admin->setZipcode("31000");
-        $admin->setCity("Toulouse");
-        $admin->setPassword($this->passwordEncoder->hashPassword($admin,"totoro"));
+        $admin->setZipcode("61000");
+        $admin->setCity("Strasbourg");
+        $admin->setPassword($this->passwordEncoder->hashPassword($admin,"123456"));
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setResetToken(0);
 

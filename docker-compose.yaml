@@ -14,19 +14,19 @@ services:
       MYSQL_USER: utilisateur
       MYSQL_PASSWORD: mot2Passe
     ports:
-      - '4306:3306'
+      - '3306:3306'
     volumes:
       - ./mysql:/var/lib/mysql
 #Création et configuration de l'application : l'id de l'image correspond à celui de l'image du fichier Dockerfile    
   app:
-    image: 3b0dc841ac47
+    build: .
     ports:
       - '8080:80'
     depends_on:
       - database
 #Création de l'image php : l'id de l'image correspond à celui de l'image du fichier Dockerfile       
   php: 
-    image: 3b0dc841ac47
+    build: .
 #Création et configuration du container phpmyadmin. phpmyadmin s'exécutera sur le port 8000 et se connectera automatiquement
   phpmyadmin:
     image: phpmyadmin
@@ -60,3 +60,4 @@ services:
       - MAIL_USERNAME=null
       - MAIL_PASSWORD=null
       - MAIL_ENCRYPTION=null
+  
