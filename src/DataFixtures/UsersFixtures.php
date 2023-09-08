@@ -17,8 +17,8 @@ class UsersFixtures extends Fixture
     {
         $admin = new Users();
         $admin->setEmail("toto@email.com");
-        $admin->setLastName('Thom');
-        $admin->setFirstName("Thom");
+        $admin->setLastName('Toto');
+        $admin->setFirstName("Toto");
         $admin->setAddress("1 rue de la rue");
         $admin->setZipcode("61000");
         $admin->setCity("Strasbourg");
