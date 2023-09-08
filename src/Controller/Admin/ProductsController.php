@@ -122,11 +122,14 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete')]
-    public function delete(Products $product): Response
+    public function delete(Products $product,EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('PRODUCT_DELETE',$product);
+        $this->denyAccessUnlessGranted('PRODUCT_DELETE',$product,);
         
-        return $this->render('admin/products/delete.html.twig');
+        $em->remove($product);
+        $em->flush(); 
+        return $this->redirectToRoute('app_admin_products_index');
+        
     }
 
     #[Route('/delete/image/{id}', name: 'delete_image')]
