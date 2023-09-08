@@ -38,8 +38,6 @@ services:
 #PMA_PASSWORD (à modifier) : mot de passe correspondant à l'utilisateur avec lequel vous voulez vous connecter. Identique à mysql_password défini plus haut     
     environment:
       - PMA_HOST=database
-      - PMA_USER=utilisateur
-      - PMA_PASSWORD=mot2Passe
     volumes: 
       - /sessions
       - ~/docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
