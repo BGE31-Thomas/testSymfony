@@ -34,8 +34,9 @@ services:
     ports:
       - 8000:80
 #PMA_HOST : sa valeur doit correspondre au nom que vous avez donné à la base mysql définie plus haut. 
-#PMA_USER : nom de l'utilisateur avec lequel vous voulez vous connecter (à modifier). Identique à mysql_user défini plus haut
-#PMA_PASSWORD (à modifier) : mot de passe correspondant à l'utilisateur avec lequel vous voulez vous connecter. Identique à mysql_password défini plus haut     
+#A renseigner si vous voulez que phpmyadmin se connecte automatiquement.
+#PMA_USER : nom de l'utilisateur avec lequel vous voulez vous connecter. Identique à mysql_user défini plus haut
+#PMA_PASSWORD : mot de passe correspondant à l'utilisateur avec lequel vous voulez vous connecter. Identique à mysql_password défini plus haut     
     environment:
       - PMA_HOST=database
     volumes: 
@@ -43,7 +44,7 @@ services:
       - ~/docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
 
 #Crée le container de mailhog. Pour l'envoi, le port sera 1025 sera utilisé. Pour visionner les courriels reçus, il faudra utiliser le port 8025.      
-  ui_web:
+  mailhog:
     image: mailhog/mailhog
     container_name: cont_mailhog
     tty: true
